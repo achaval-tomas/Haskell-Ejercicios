@@ -58,11 +58,11 @@ sumatoria' (x:xs) t = (t x) + sumatoria' xs t  -- Suma los enteros x de la lista
 -- ejercicio 4.d)
 productoria' :: [a] -> (a -> Int) -> Int
 productoria' [] t = 1
-productoria' (x:xs) t = (t x) * productoria' xs t  -- Multiplica los enteros x de la lista x:xs tras aplicarles una funcion t
+productoria' (x:xs) t = (t x) * productoria' xs t  -- Multiplica los enteros x de la lista x:xs tras aplicarles una funcion t.
 
 -- ejercicio 5)
 paratodo'' :: [Bool] -> Bool
-paratodo'' xs = paratodo' xs id -- Redefino paratodo (2.a) utilizando paratodo' (4.a)
+paratodo'' xs = paratodo' xs id -- Redefino paratodo (2.a) utilizando paratodo' (4.a).
 
 -- ejercicio 6.a)
 todosPares :: [Int] -> Bool
@@ -103,41 +103,47 @@ y devuelve una lista con los elementos que satisfagan el predicado.
 pues solo se mantienen los elementos que satisfacen el predicado "esPositivo".
 -}
 
--- ejercicio 8)
+-- ejercicio 8.a)
 doblesDe :: Num a => [a] -> [a]
 doblesDe [] = []
-doblesDe (x:xs) = (x*2):(doblesDe xs) -- recursiva
+doblesDe (x:xs) = (x*2):(doblesDe xs)      -- Recursiva.
 
+-- ejercicio 8.b)
 duplicate :: Num a => [a] -> [a]
-duplicate xs = map (*2) xs -- mapeada
+duplicate xs = map (*2) xs                 -- Mapeada.
 
--- ejercicio 9)
+-- ejercicio 9.a)
 soloPares :: [Int] -> [Int]
 soloPares [] = []
 soloPares (p:ps) | even p = p:(soloPares ps)  -- Recursiva
                  | odd p = soloPares ps       -- por casos.
 
+-- ejercicio 9.b)
 onlyEven :: [Int] -> [Int]
 onlyEven xs = filter even xs  -- Usando filter.
 
+-- ejercicio 9.c)
 multiPares :: [Int] -> Int -- Mejora del 6.e)
 multiPares xs = productoria' (filter even xs) (*1) 
 
--- ejercicio 10)
+-- ejercicio 10.a)
 primIgualesA :: Eq a => a -> [a] -> [a]
 primIgualesA v [] = []
 primIgualesA v (x:xs) | v == x = v:(primIgualesA v xs) -- Recursion y
                       | otherwise = []                 -- casos.
 
+-- ejercicio 10.b)
 tramoInicialDe :: Eq a => a -> [a] -> [a]
 tramoInicialDe v xs = takeWhile (==v) xs   -- Utilizo takeWhile.
 
--- ejercicio 11)
+-- ejercicio 11.a)
 primIguales :: Eq a => [a] -> [a]
 primIguales [] = []
+primIguales [a] = [a]
 primIguales (x:(y:xs)) | x == y = x:(primIguales (y:xs))  -- Recursion
                        | otherwise = x:[]
 
+-- ejercicio 11.b)
 primIguales' :: Eq a => [a] -> [a]
 primIguales' (x:xs) = primIgualesA x (x:xs) -- Utilizo primIgualesA.
 
@@ -158,9 +164,41 @@ sumaToria xs p = cuantGen (+) 0 xs p     -- redefino 4.c)
 producToria :: [a] -> (a -> Int) -> Int
 producToria xs p = cuantGen (*) 1 xs p   -- redefino 4.d)
 
--- ejercicio 13)
+{- ejercicio 13
+a) Esta bien tipado, (x, y) es de tipo (a, b), x tiene tipo a, e y tiene tipo b.
+b) No esta bien escrito pues f toma una lista de tuplas.
+c) Si esta bien tipado aunque se podria utilizar pattern matching para mejor uso de las tuplas x es del tipo (a, b).
+d) Esta bien tipado, x tipo a e y tipo b.
+e) Esta bien tipado pero no cubre todos los casos.
+f) Esta bien tipado pero no cubre todos los casos ((x, 1):xs) es de tipo [(Int, a)] al igual que xs, y x es de tipo Int.
+g) Esta bien tipado, a es de tipo (Int -> Int) y b de tipo Int.
+h) Esta bien tipado pero no cubre todos los casos, a es de tipo (Int -> Int).
+i) Esta mal tipado pues la funcion solo toma 2 argumentos y uno de ellos debe ser una funcion (Int -> Int).
+-}
 
+-- ejercicio 14.a)
+fa :: (a, b) -> b
+fa (x, y) = y
 
-factor :: Int -> Int
-factor 0 = 1
-factor x = productoria' [0..x] id
+-- ejercicio 14.b)
+-- fb :: (a, b) -> c
+-- NO SE PUEDE
+
+-- ejercicio 14.c)
+fc :: (a -> b) -> a -> b
+fc y x = y x
+
+-- ejercicio 14.d)
+fd :: (a -> b) -> [a] -> [b]
+fd x [] = []
+fd x (y:ys) = (x y):(fd x ys)
+
+-- ejercicio 14.e)
+fe :: (a -> b) -> (b -> c) -> a -> c
+fe a b c = b (a c)
+
+-- Funciones inventadas
+base10aBinario :: Int -> [Int]
+base10aBinario 1 = [1]
+base10aBinario 0 = [0]
+base10aBinario x = (base10aBinario (div x 2)) ++ [mod x 2]

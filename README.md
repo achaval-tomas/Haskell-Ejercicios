@@ -1,2 +1,2 @@
-# Haskell-Ejercicios
-Ejercicios y problemas resueltos en Haskell. Algunos en FAMAF, otros personales.
+# Haskell Ejercicios y Labs
+Ejercicios y problemas resueltos en Haskell durante 1er año de la Lic. en Cs. de la Computación en FaMAF - UNC.
